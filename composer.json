@@ -1,0 +1,20 @@
+{
+    "name": "illuminate/log",
+    "authors": [
+        {
+            "name": "Taylor Otwell",
+            "email": "taylorotwell@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "monolog/monolog": "1.2.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.7.2"
+    },
+    "autoload": {
+        "psr-0": {"Illuminate\\Log": "src/"}
+    },
+    "minimum-stability": "dev"
+}
