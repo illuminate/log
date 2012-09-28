@@ -62,7 +62,7 @@ class Writer {
 	 * @param  string  $level
 	 * @return void
 	 */
-	public function useRotatingFiles($path, $days, $level = 'debug')
+	public function useRotatingFiles($path, $days = 0, $level = 'debug')
 	{
 		$level = $this->parseLevel($level);
 
