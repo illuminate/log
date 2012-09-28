@@ -26,4 +26,13 @@ class WriterTest extends PHPUnit_Framework_TestCase {
 		$writer->useRotatingFiles(__DIR__, 5);
 	}
 
+
+	public function testMagicMethodsPassErrorAdditionsToMonolog()
+	{
+		$writer = new Writer($monolog = m::mock('Monolog\Logger'));
+		$monolog->shouldReceive('addError')->once()->with('foo')->andReturn('bar');
+
+		$this->assertEquals('bar', $writer->error('foo'));
+	}
+
 }

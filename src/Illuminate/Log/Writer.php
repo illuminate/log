@@ -14,6 +14,22 @@ class Writer {
 	protected $monolog;
 
 	/**
+	 * All of the error levels.
+	 *
+	 * @var array
+	 */
+	protected $levels = array(
+		'debug',
+		'info',
+		'notice',
+		'warning',
+		'error',
+		'critical',
+		'alert',
+		'emergency',
+	);
+
+	/**
 	 * Create a new log writer instance.
 	 *
 	 * @param  Monolog\Logger  $monolog
@@ -86,6 +102,9 @@ class Writer {
 
 			case 'emergency':
 				return MonologLogger::EMERGENCY;
+
+			default:
+				throw new \InvalidArgumentException("Invalid log level.");
 		}
 	}
 
@@ -97,6 +116,25 @@ class Writer {
 	public function getMonolog()
 	{
 		return $this->monolog;
+	}
+
+	/**
+	 * Dynamically handle error additions.
+	 *
+	 * @param  string  $method
+	 * @param  array   $parameters
+	 * @return mixed
+	 */
+	public function __call($method, $parameters)
+	{
+		if (in_array($method, $this->levels))
+		{
+			$method = 'add'.ucfirst($method);
+
+			return call_user_func_array(array($this->monolog, $method), $parameters);
+		}
+
+		throw new \BadMethodCallException("Method [$method] does not exist.");
 	}
 
 }
