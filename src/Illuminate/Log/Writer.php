@@ -55,14 +55,14 @@ class Writer {
 	}
 
 	/**
-	 * Register a rotating file log handler.
+	 * Register a daily file log handler.
 	 *
 	 * @param  string  $path
 	 * @param  int     $days
 	 * @param  string  $level
 	 * @return void
 	 */
-	public function useRotatingFiles($path, $days = 0, $level = 'debug')
+	public function useDailyFiles($path, $days = 0, $level = 'debug')
 	{
 		$level = $this->parseLevel($level);
 

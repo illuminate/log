@@ -23,7 +23,7 @@ class WriterTest extends PHPUnit_Framework_TestCase {
 	{
 		$writer = new Writer($monolog = m::mock('Monolog\Logger'));
 		$monolog->shouldReceive('pushHandler')->once()->with(m::type('Monolog\Handler\RotatingFileHandler'));
-		$writer->useRotatingFiles(__DIR__, 5);
+		$writer->useDailyFiles(__DIR__, 5);
 	}
 
 
