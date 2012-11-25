@@ -7,12 +7,11 @@ class LogServiceProvider extends ServiceProvider {
 	/**
 	 * Register the service provider.
 	 *
-	 * @param  Illuminate\Foundation\Application  $app
 	 * @return void
 	 */
-	public function register($app)
+	public function register()
 	{
-		$app['log'] = $app->share(function($app)
+		$this->app['log'] = $this->app->share(function($app)
 		{
 			return new Writer(new \Monolog\Logger('log'));
 		});
