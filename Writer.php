@@ -208,11 +208,12 @@ class Writer implements LogContract, PsrLoggerInterface
      *
      * @param  string  $path
      * @param  string  $level
+     * @param bool|true $bubble
      * @return void
      */
-    public function useFiles($path, $level = 'debug')
+    public function useFiles($path, $level = 'debug', $bubble = true)
     {
-        $this->monolog->pushHandler($handler = new StreamHandler($path, $this->parseLevel($level)));
+        $this->monolog->pushHandler($handler = new StreamHandler($path, $this->parseLevel($level), $bubble));
 
         $handler->setFormatter($this->getDefaultFormatter());
     }
@@ -223,12 +224,13 @@ class Writer implements LogContract, PsrLoggerInterface
      * @param  string  $path
      * @param  int     $days
      * @param  string  $level
+     * @param bool|true $bubble
      * @return void
      */
-    public function useDailyFiles($path, $days = 0, $level = 'debug')
+    public function useDailyFiles($path, $days = 0, $level = 'debug', $bubble = true)
     {
         $this->monolog->pushHandler(
-            $handler = new RotatingFileHandler($path, $days, $this->parseLevel($level))
+            $handler = new RotatingFileHandler($path, $days, $this->parseLevel($level), $bubble)
         );
 
         $handler->setFormatter($this->getDefaultFormatter());
@@ -239,11 +241,12 @@ class Writer implements LogContract, PsrLoggerInterface
      *
      * @param  string  $name
      * @param  string  $level
+     * @param bool|true $bubble
      * @return \Psr\Log\LoggerInterface
      */
-    public function useSyslog($name = 'laravel', $level = 'debug')
+    public function useSyslog($name = 'laravel', $level = 'debug', $bubble = true)
     {
-        return $this->monolog->pushHandler(new SyslogHandler($name, LOG_USER, $level));
+        return $this->monolog->pushHandler(new SyslogHandler($name, LOG_USER, $level, $bubble));
     }
 
     /**
@@ -251,12 +254,13 @@ class Writer implements LogContract, PsrLoggerInterface
      *
      * @param  string  $level
      * @param  int  $messageType
+     * @param bool|true $bubble
      * @return void
      */
-    public function useErrorLog($level = 'debug', $messageType = ErrorLogHandler::OPERATING_SYSTEM)
+    public function useErrorLog($level = 'debug', $messageType = ErrorLogHandler::OPERATING_SYSTEM, $bubble = true)
     {
         $this->monolog->pushHandler(
-            $handler = new ErrorLogHandler($messageType, $this->parseLevel($level))
+            $handler = new ErrorLogHandler($messageType, $this->parseLevel($level), $bubble)
         );
 
         $handler->setFormatter($this->getDefaultFormatter());
